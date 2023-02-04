@@ -18,6 +18,8 @@ public class MovementBase : MonoBehaviour
 
     public int score;
 
+    private Rigidbody _rb;
+
     #region Static values
     public static int killCount = 0;
 
@@ -30,6 +32,8 @@ public class MovementBase : MonoBehaviour
     {
         // Here we prevent collision between object and object's target.
         Physics.GetIgnoreCollision(GetComponent<Collider>(), _myTarget.GetComponent<Collider>());
+
+        _rb = GetComponent<Rigidbody>();
         killCount = 0;
         isGameStarted = false;
         isGameFinished = false;
@@ -52,6 +56,15 @@ public class MovementBase : MonoBehaviour
 
     }
     #endregion
+
+    public bool Pushing()
+    {
+        // With this check we prevent moving while pushing.
+        if (_rb.velocity.magnitude <= 0.1f)
+            return false;
+        else
+            return true;
+    }
 
     private void AddScore(int amount)
     {
@@ -111,6 +124,7 @@ public class MovementBase : MonoBehaviour
 
     private void CheckGameIsOver()
     {
+        //This chech is before destroying enemy.
         int enemyCount = GameObject.FindGameObjectsWithTag("Enemy").Length;
 
         if (enemyCount == 1)

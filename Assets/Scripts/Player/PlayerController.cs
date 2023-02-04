@@ -19,14 +19,16 @@ public class PlayerController : MovementBase
         _anim = GetComponent<Animator>();
     }
 
+    private void FixedUpdate()
+    {
+        if (isGameStarted && !isGameFinished)
+            Rotation();
+    }
     void Update()
     {
         if (isGameStarted && !isGameFinished)
-        {
-            Rotation();
-
-            Movement();
-        }
+            if (!Pushing())
+                Movement();
 
     }
 

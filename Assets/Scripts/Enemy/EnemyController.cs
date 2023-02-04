@@ -17,6 +17,11 @@ public class EnemyController : MovementBase
         _player = GameObject.FindGameObjectWithTag("Player");
     }
 
+    private void FixedUpdate()
+    {
+        if (isGameStarted && !isGameFinished)
+            Rotation();
+    }
     void Update()
     {
         if (isGameStarted && !isGameFinished)
@@ -24,8 +29,9 @@ public class EnemyController : MovementBase
             StateCheck();
             StateExecute();
 
-            Rotation();
-            Movement();
+
+            if (!Pushing())
+                Movement();
 
         }
     }
